@@ -22,6 +22,7 @@ public:
   static SDL_Event event;
   static bool running;
   static AssetManager* assets;
+  static SDL_Rect camera;
 
 private:
   SDL_Window* window;

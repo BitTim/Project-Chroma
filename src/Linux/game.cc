@@ -1,10 +1,12 @@
 #include "../lib/game.hh"
 #include "../lib/logger.hh"
+#include "../lib/util.hh"
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 bool Game::running = true;
 AssetManager* Game::assets = nullptr;
+SDL_Rect Game::camera;
 
 void Game::init(std::string title, int x, int y, int w, int h, bool fullscreen)
 {
@@ -24,11 +26,16 @@ void Game::init(std::string title, int x, int y, int w, int h, bool fullscreen)
 
   assets = new AssetManager();
   Logger::log("init", "Created AssetManager");
+
+  camera = Util::iSDL_Rect(0, 0, w, h);
+  Logger::log("init", "Created Camera");
+
+  assets->addTexture("missing", "dat/missing.png");
 }
 
 void Game::handleEvents()
 {
-  SDL_WaitEvent(&event);
+  SDL_PollEvent(&event);
   if(event.type == SDL_QUIT)
   {
     Logger::log("event", "Received SDL_QUIT event");
@@ -36,7 +43,16 @@ void Game::handleEvents()
   }
 }
 
-void Game::update() { }
+void Game::update()
+{
+  //camera.x = player.getComponent<TransformComponent>().pos.x - 320;
+  //camera.y = player.getComponent<TransformComponent>().pos.y - 260;
+
+  if(camera.x < 0) camera.x = 0;
+  if(camera.y < 0) camera.y = 0;
+  if(camera.x > camera.w) camera.x = camera.w;
+  if(camera.y > camera.h) camera.y = camera.h;
+}
 
 void Game::render()
 {
