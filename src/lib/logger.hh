@@ -6,6 +6,10 @@
 
 class Logger
 {
+private:
+  static std::ofstream logFile;
+  static bool silent;
+  
 public:
   static void init();
 
@@ -14,8 +18,4 @@ public:
   static void logSilent(std::string tag, std::string format, ...);
 
   static void terminate();
-
-private:
-  static std::ofstream logFile;
-  static bool silent;
 };
