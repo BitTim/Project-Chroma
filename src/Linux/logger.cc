@@ -20,7 +20,7 @@ std::string Logger::getTime(std::string format, bool timeOnly)
   tm *ltm = localtime(&now);
 
   if(timeOnly) sprintf(buf, format.c_str(), ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
-  else sprintf(buf, format.c_str(), ltm->tm_mday, ltm->tm_mon, ltm->tm_year,
+  else sprintf(buf, format.c_str(), ltm->tm_mday, ltm->tm_mon + 1, ltm->tm_year + 1900,
     ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
   
   return buf;
