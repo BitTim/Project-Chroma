@@ -1,31 +1,23 @@
 #include "../../lib/Managers/assetManager.hh"
 #include "../../lib/Managers/textureManager.hh"
 
-//Texture Management
-void AssetManager::addTexture(std::string id, std::string path)
+//Spritr Management
+void AssetManager::addSprite(std::string id, std::string path, int w, int h, int scale, bool animated = false)
 {
-  textures.emplace(id, TextureManager::loadTexture(path));
+  Sprite sprite(w, h, scale, animated);
+  sprite.loadTexture(path);
+
+  sprites.emplace(id, &sprite);
 }
 
-SDL_Texture* AssetManager::getTexture(std::string id) { return textures[id]; }
-
-//Animation Management
-void AssetManager::addAnimationManager(std::string animationManagerID, std::string textureID, int w, int h, int scale)
+void AssetManager::defineAnimation(std::string spriteID, std::string animationID, int nIndex, int nFrames, int nSpeed)
 {
-  AnimationManager animationManager;
-  animationManager.attachManager(textureID, w, h, scale);
-
-  animationManagers.emplace(animationManagerID, &animationManager);
+  sprites[spriteID]->defineAnimation(animationID, nIndex, nFrames, nSpeed);
 }
 
-void AssetManager::defineAnimation(std::string animationManagerID, std::string animationID, int nIndex, int nFrames, int nSpeed)
+void AssetManager::playAnimation(std::string spriteID, std::string animationID)
 {
-  animationManagers[animationManagerID]->defineAnimation(animationID, nIndex, nFrames, nSpeed);
+  sprites[spriteID]->playAnimation(animationID);
 }
 
-void AssetManager::playAnimation(std::string animationManagerID, std::string animationID)
-{
-  animationManagers[animationManagerID]->playAnimation(animationID);
-}
-
-AnimationManager* AssetManager::getAnimationManager(std::string id) { return animationManagers[id]; }
+Sprite* AssetManager::getSprite(std::string id) { return sprites[id]; }

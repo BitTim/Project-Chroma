@@ -2,22 +2,18 @@
 
 #include <map>
 #include <SDL2/SDL.h>
-#include "animationManager.hh"
+#include "../sprites.hh"
 
 class AssetManager
 {
 private:
   std::map<std::string, SDL_Texture*> textures;
-  std::map<std::string, AnimationManager*> animationManagers;
+  std::map<std::string, Sprite*> sprites;
 
 public:
-  //Texture Management
-  void addTexture(std::string id, std::string path);
-  SDL_Texture* getTexture(std::string id);
-
-  //Animation Management
-  void addAnimationManager(std::string animationManagerID, std::string textureID, int w, int h, int scale);
-  void defineAnimation(std::string animationManagerID, std::string animationID, int nIndex, int nFrames, int nSpeed);
-  void playAnimation(std::string animationManagerID, std::string animationID);
-  AnimationManager* getAnimationManager(std::string id);
+  //Sprite Management
+  void addSprite(std::string id, std::string path, int w, int h, int scale, bool animated = false);
+  void defineAnimation(std::string spriteID, std::string animationID, int nIndex, int nFrames, int nSpeed);
+  void playAnimation(std::string spriteID, std::string animationID);
+  Sprite* getSprite(std::string id);
 };
