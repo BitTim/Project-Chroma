@@ -1,6 +1,7 @@
 #include "../lib/sprites.hh"
 #include "../lib/Managers/textureManager.hh"
 #include "../lib/util.hh"
+#include "../lib/logger.hh"
 
 Animation::Animation(int nIndex, int nFrames, int nSpeed)
 {
@@ -9,7 +10,7 @@ Animation::Animation(int nIndex, int nFrames, int nSpeed)
   speed = nSpeed;
 }
 
-Sprite::Sprite(int w, int h, int scale, bool nAnimated = false)
+Sprite::Sprite(int w, int h, int scale, bool nAnimated)
 {
   src = Util::iSDL_Rect(0, 0, w, h);
   dst = Util::iSDL_Rect(0, 0, w * scale, h * scale);
@@ -24,7 +25,8 @@ void Sprite::loadTexture(std::string path)
 
 void Sprite::defineAnimation(std::string id, int nIndex, int nFrames, int nSpeed)
 {
-  animations.emplace(id, Animation(nIndex, nFrames, nSpeed));
+  Animation* animation = new Animation(nIndex, nFrames, nSpeed);
+  animations.emplace(id, animation);
 }
 
 void Sprite::playAnimation(std::string id)
@@ -36,8 +38,11 @@ void Sprite::playAnimation(std::string id)
 
 void Sprite::update()
 {
-  src.x = src.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
-  src.y = index * dst.h;
+  if(animated)
+  {
+    src.x = src.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
+    src.y = index * src.h;
+  }
 }
 
 void Sprite::draw()
