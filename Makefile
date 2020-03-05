@@ -17,7 +17,10 @@ debugl: bin/Linux/chroma_debug
 
 clean:
 	rm -R bin/*
-	rm log/*
+	rm -R log/
 
 	mkdir bin/Linux
 	mkdir bin/Windows
+	mkdir log
+
+	clear
