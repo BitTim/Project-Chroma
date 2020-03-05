@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <SDL2/SDL.h>
 
 struct Animation
 {
@@ -14,7 +15,7 @@ struct Animation
 class Sprite
 {
 private:
-  static std::map<std::string, Animation*> animations;
+  std::map<std::string, Animation*> animations;
   SDL_Texture* texture;
   bool animated = false;
 
@@ -23,7 +24,8 @@ private:
   int speed;
 
 public:
-  SDL_Rect src, dst;
+  SDL_Rect src;
+  SDL_Rect dst;
 
   Sprite() { }
   Sprite(int w, int h, int scale, bool nAnimated = false);
