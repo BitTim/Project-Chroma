@@ -6,6 +6,9 @@
 
 class Game
 {
+private:
+  SDL_Window* window;
+  
 public:
   Game() { }
   ~Game() { }
@@ -22,7 +25,5 @@ public:
   static SDL_Event event;
   static bool running;
   static AssetManager* assets;
-
-private:
-  SDL_Window* window;
+  static SDL_Rect camera;
 };
