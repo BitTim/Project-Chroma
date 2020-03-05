@@ -30,7 +30,13 @@ void Game::init(std::string title, int x, int y, int w, int h, bool fullscreen)
   camera = Util::iSDL_Rect(0, 0, w, h);
   Logger::log("init", "Created Camera");
 
-  assets->addTexture("missing", "dat/missing.png");
+  assets->addSprite("missing", "dat/missing.png", 32, 32, 1);
+  assets->addSprite("player", "dat/player_placeholder.png", 32, 32, 1, true);
+
+  assets->defineAnimation("player", "red", 0, 12, 100);
+  assets->defineAnimation("player", "green", 1, 12, 100);
+  assets->defineAnimation("player", "blue", 2, 12, 100);
+  assets->defineAnimation("player", "yellow", 3, 12, 100);
 }
 
 void Game::handleEvents()
