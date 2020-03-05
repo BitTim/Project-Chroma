@@ -4,6 +4,7 @@
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 bool Game::running = true;
+AssetManager* Game::assets = nullptr;
 
 void Game::init(std::string title, int x, int y, int w, int h, bool fullscreen)
 {
@@ -20,6 +21,9 @@ void Game::init(std::string title, int x, int y, int w, int h, bool fullscreen)
 
   SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
   Logger::log("init", "Set Blendmode to BLEND");
+
+  assets = new AssetManager();
+  Logger::log("init", "Created AssetManager");
 }
 
 void Game::handleEvents()
